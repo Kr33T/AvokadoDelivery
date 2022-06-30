@@ -21,6 +21,7 @@ namespace Avokado
         }
 
         SqlCommand query = null;
+        SqlDataReader reader = null;
 
         private void test_Load(object sender, EventArgs e)
         {
@@ -36,27 +37,48 @@ namespace Avokado
             minPriceNUD.Value = minPriceNUD.Minimum;
             maxPriceNUD.Value = maxPriceNUD.Maximum;
 
-            CheckBox[] checkBoxes = new CheckBox[0];
-            query = new SqlCommand($"select goodType_name from goodTypes", DBHElper.sqlConnection);
-            SqlDataReader reader = query.ExecuteReader();
+            CheckBox[] checkBoxesCat = new CheckBox[0];
+            query = new SqlCommand($"select goodType_name, id_goodtype from goodTypes", DBHElper.sqlConnection);
+            reader = query.ExecuteReader();
             int i = 0, x = 3, y = 3;
             while (reader.Read())
             {
-                Array.Resize(ref checkBoxes, checkBoxes.Length + 1);
-                checkBoxes[i] = new CheckBox() { Text = reader.GetString(0), Tag = i, Location = new Point(x, y) };
-                checkBoxes[i].CheckedChanged += (obj, args) =>
+                Array.Resize(ref checkBoxesCat, checkBoxesCat.Length + 1);
+                checkBoxesCat[i] = new CheckBox() { Text = reader.GetString(0), Tag = reader.GetInt32(1), Location = new Point(x, y), Size = new Size(190, 20) };
+                checkBoxesCat[i].CheckedChanged += (obj, args) =>
                 {
                     updatePanelOfGoods();
                 };
-                categoriesP.Controls.Add(checkBoxes[i]);
+                categoriesP.Controls.Add(checkBoxesCat[i]);
+                y += 19;
+                i++;
+            }
+            reader.Close();
+
+            x = y = 0;
+            CheckBox[] checkBoxesBrnd = new CheckBox[0];
+            query = new SqlCommand($"select brand_name, id_brand from brands", DBHElper.sqlConnection);
+            reader = query.ExecuteReader();
+            i = 0;
+            while (reader.Read())
+            {
+                Array.Resize(ref checkBoxesBrnd, checkBoxesBrnd.Length + 1);
+                checkBoxesBrnd[i] = new CheckBox() { Text = reader.GetString(0), Tag = reader.GetInt32(1), Location = new Point(x, y), Size = new Size(190, 20) };
+                checkBoxesBrnd[i].CheckedChanged += (obj, args) =>
+                {
+                    updatePanelOfGoods();
+                };
+                brandsP.Controls.Add(checkBoxesBrnd[i]);
                 y += 19;
                 i++;
             }
             reader.Close();
         }
 
-        string[] sortArr = new string[0];
+        string[] sortArr1 = new string[0];
+        string[] sortArr2 = new string[0];
         string sort = null;
+        string temp = null;
 
         Panel[] panels = new Panel[0];
         PictureBox[] pic = new PictureBox[0];
@@ -70,7 +92,8 @@ namespace Avokado
         void updatePanelOfGoods()
         {
             productsP.Controls.Clear();
-            Array.Resize(ref sortArr, 0);
+            Array.Resize(ref sortArr1, 0);
+            Array.Resize(ref sortArr2, 0);
             sort = null;
             
 
@@ -78,22 +101,35 @@ namespace Avokado
             {
                 if (checkBox.Checked)
                 {
-                    Array.Resize(ref sortArr, sortArr.Length + 1);
-                    query = new SqlCommand($"select id_goodtype from goodtypes where goodType_name like '{checkBox.Text}'", DBHElper.sqlConnection);
-                    sortArr[sortArr.Length - 1] = $"id_goodType like '{query.ExecuteScalar()}'";
+                    Array.Resize(ref sortArr1, sortArr1.Length + 1);
+                    sortArr1[sortArr1.Length - 1] = $"'{checkBox.Tag}'";
                 }
+            }
+
+            foreach(CheckBox checkBox in brandsP.Controls.OfType<CheckBox>())
+            {
+                if (checkBox.Checked)
+                {
+                    Array.Resize(ref sortArr2, sortArr2.Length + 1);
+                    sortArr2[sortArr2.Length - 1] = $"'{checkBox.Tag}'";
+                }
+            }
+
+            if (sortArr1.Length != 0)
+            {
+                sort = String.Join(", ", sortArr1);
+                sort = " and id_goodtype in (" + sort + ")";
+            }
+
+            if(sortArr2.Length != 0)
+            {
+                temp = String.Join(", ", sortArr2);
+                sort += " and id_brand in (" + temp + ")"; 
             }
 
             if (!String.IsNullOrEmpty(searchTB.Text))
             {
-                Array.Resize(ref sortArr, sortArr.Length + 1);
-                sortArr[sortArr.Length - 1] = $"good_name like '%{searchTB.Text}%'";
-            }
-            
-            if (sortArr.Length != 0)
-            {
-                sort = String.Join(" and ", sortArr);
-                sort = " and " + sort;
+                sort += $"and good_name like '%{searchTB.Text}%'";
             }
 
             Array.Resize(ref panels, 0);
@@ -167,6 +203,61 @@ namespace Avokado
         private void minPriceNUD_ValueChanged(object sender, EventArgs e)
         {
             updatePanelOfGoods();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach(CheckBox checkBox in categoriesP.Controls.OfType<CheckBox>())
+            {
+                checkBox.Checked = false;
+            }
+
+            foreach (CheckBox checkBox in brandsP.Controls.OfType<CheckBox>())
+            {
+                checkBox.Checked = false;
+            }
+
+            minPriceNUD.Value = minPriceNUD.Minimum;
+            maxPriceNUD.Value = maxPriceNUD.Maximum;
+        }
+
+        bool checkShowActions = true;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (checkShowActions)
+            {
+                actionsP.Visible = true;
+                checkShowActions = !checkShowActions;
+            }
+            else
+            {
+                actionsP.Visible = false;
+                checkShowActions = !checkShowActions;
+            }
+        }
+
+        private void closePanel_Click(object sender, EventArgs e)
+        {
+            checkShowActions = !checkShowActions;
+            actionsP.Visible = false;
+        }
+
+        private void logOutBTN_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void userDataBTN_Click(object sender, EventArgs e)
+        {
+            userData user = new userData();
+            user.Show();
+        }
+
+        private void orderHistoryBTN_Click(object sender, EventArgs e)
+        {
+            orderHistory order = new orderHistory();
+            order.Show();
         }
 
         private void maxPriceNUD_ValueChanged(object sender, EventArgs e)
