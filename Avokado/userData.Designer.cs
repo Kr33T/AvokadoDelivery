@@ -45,6 +45,9 @@
             this.cancelBTN = new System.Windows.Forms.Button();
             this.useDeliveryCB = new System.Windows.Forms.CheckBox();
             this.endingEmailCB = new System.Windows.Forms.ComboBox();
+            this.orderHistoryDGV = new System.Windows.Forms.DataGridView();
+            this.label7 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.orderHistoryDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +65,7 @@
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Location = new System.Drawing.Point(0, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(348, 2);
+            this.label2.Size = new System.Drawing.Size(800, 2);
             this.label2.TabIndex = 1;
             this.label2.Text = "label2";
             // 
@@ -154,7 +157,7 @@
             // 
             // changeAuthDataBTN
             // 
-            this.changeAuthDataBTN.Location = new System.Drawing.Point(153, 16);
+            this.changeAuthDataBTN.Location = new System.Drawing.Point(428, 16);
             this.changeAuthDataBTN.Name = "changeAuthDataBTN";
             this.changeAuthDataBTN.Size = new System.Drawing.Size(178, 23);
             this.changeAuthDataBTN.TabIndex = 12;
@@ -208,11 +211,31 @@
             this.endingEmailCB.Size = new System.Drawing.Size(74, 21);
             this.endingEmailCB.TabIndex = 16;
             // 
+            // orderHistoryDGV
+            // 
+            this.orderHistoryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.orderHistoryDGV.Location = new System.Drawing.Point(337, 83);
+            this.orderHistoryDGV.Name = "orderHistoryDGV";
+            this.orderHistoryDGV.Size = new System.Drawing.Size(269, 241);
+            this.orderHistoryDGV.TabIndex = 17;
+            this.orderHistoryDGV.DoubleClick += new System.EventHandler(this.orderHistoryDGV_DoubleClick);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(334, 67);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(95, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "История заказов";
+            // 
             // userData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(346, 336);
+            this.ClientSize = new System.Drawing.Size(618, 336);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.orderHistoryDGV);
             this.Controls.Add(this.endingEmailCB);
             this.Controls.Add(this.useDeliveryCB);
             this.Controls.Add(this.cancelBTN);
@@ -230,9 +253,12 @@
             this.Controls.Add(this.fioTB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.MaximumSize = new System.Drawing.Size(634, 375);
+            this.MinimumSize = new System.Drawing.Size(634, 375);
             this.Name = "userData";
             this.Text = "userData";
             this.Load += new System.EventHandler(this.userData_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.orderHistoryDGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,5 +283,7 @@
         private System.Windows.Forms.Button cancelBTN;
         private System.Windows.Forms.CheckBox useDeliveryCB;
         private System.Windows.Forms.ComboBox endingEmailCB;
+        private System.Windows.Forms.DataGridView orderHistoryDGV;
+        private System.Windows.Forms.Label label7;
     }
 }

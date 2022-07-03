@@ -204,6 +204,8 @@
             this.Controls.Add(this.applyPasswordTB);
             this.Controls.Add(this.passwordTB);
             this.Controls.Add(this.loginTB);
+            this.MaximumSize = new System.Drawing.Size(233, 312);
+            this.MinimumSize = new System.Drawing.Size(233, 312);
             this.Name = "changeAuthData";
             this.Text = "changeAuthData";
             this.Load += new System.EventHandler(this.changeAuthData_Load);

@@ -49,7 +49,6 @@
             this.cartBTN = new System.Windows.Forms.Button();
             this.actionsP = new System.Windows.Forms.Panel();
             this.logOutBTN = new System.Windows.Forms.Button();
-            this.orderHistoryBTN = new System.Windows.Forms.Button();
             this.userDataBTN = new System.Windows.Forms.Button();
             this.closePanel = new System.Windows.Forms.Button();
             this.updateBTN = new System.Windows.Forms.Button();
@@ -224,7 +223,6 @@
             // actionsP
             // 
             this.actionsP.Controls.Add(this.logOutBTN);
-            this.actionsP.Controls.Add(this.orderHistoryBTN);
             this.actionsP.Controls.Add(this.userDataBTN);
             this.actionsP.Controls.Add(this.closePanel);
             this.actionsP.Location = new System.Drawing.Point(980, 79);
@@ -235,23 +233,13 @@
             // 
             // logOutBTN
             // 
-            this.logOutBTN.Location = new System.Drawing.Point(46, 72);
+            this.logOutBTN.Location = new System.Drawing.Point(46, 40);
             this.logOutBTN.Name = "logOutBTN";
             this.logOutBTN.Size = new System.Drawing.Size(252, 26);
             this.logOutBTN.TabIndex = 3;
             this.logOutBTN.Text = "Выход";
             this.logOutBTN.UseVisualStyleBackColor = true;
             this.logOutBTN.Click += new System.EventHandler(this.logOutBTN_Click);
-            // 
-            // orderHistoryBTN
-            // 
-            this.orderHistoryBTN.Location = new System.Drawing.Point(46, 40);
-            this.orderHistoryBTN.Name = "orderHistoryBTN";
-            this.orderHistoryBTN.Size = new System.Drawing.Size(252, 26);
-            this.orderHistoryBTN.TabIndex = 2;
-            this.orderHistoryBTN.Text = "История заказов";
-            this.orderHistoryBTN.UseVisualStyleBackColor = true;
-            this.orderHistoryBTN.Click += new System.EventHandler(this.orderHistoryBTN_Click);
             // 
             // userDataBTN
             // 
@@ -346,7 +334,6 @@
         private System.Windows.Forms.Button cartBTN;
         private System.Windows.Forms.Panel actionsP;
         private System.Windows.Forms.Button logOutBTN;
-        private System.Windows.Forms.Button orderHistoryBTN;
         private System.Windows.Forms.Button userDataBTN;
         private System.Windows.Forms.Button closePanel;
         private System.Windows.Forms.Button updateBTN;

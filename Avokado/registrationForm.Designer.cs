@@ -396,6 +396,8 @@
             this.Controls.Add(this.midnameTB);
             this.Controls.Add(this.nameTB);
             this.Controls.Add(this.surnameTB);
+            this.MaximumSize = new System.Drawing.Size(546, 364);
+            this.MinimumSize = new System.Drawing.Size(546, 364);
             this.Name = "registrationForm";
             this.Text = "registrationForm";
             this.Load += new System.EventHandler(this.registrationForm_Load);

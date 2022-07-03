@@ -213,6 +213,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.addressInfoP);
+            this.MaximumSize = new System.Drawing.Size(448, 255);
+            this.MinimumSize = new System.Drawing.Size(448, 255);
             this.Name = "changeAddress";
             this.Text = "changeAddress";
             this.Load += new System.EventHandler(this.changeAddress_Load);

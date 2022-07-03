@@ -15,14 +15,32 @@ namespace Avokado
     {
         SqlCommand query = null;
         SqlDataReader reader = null;
+        SqlDataAdapter dataAdapter = null;
+        DataSet dataSet = null;
 
         public userData()
         {
             InitializeComponent();
         }
 
+        int[] index = new int[0];
+
         private void userData_Load(object sender, EventArgs e)
         {
+            query = new SqlCommand($"select id_orderHistory from orderHistories where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+            reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                Array.Resize(ref index, index.Length + 1);
+                index[index.Length - 1] = reader.GetInt32(0);
+            }
+            reader.Close();
+
+            dataAdapter = new SqlDataAdapter($"select order_date as 'Дата', summa as 'Стоимость' from orderHistories where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+            dataSet = new DataSet();
+            dataAdapter.Fill(dataSet);
+            orderHistoryDGV.DataSource = dataSet.Tables[0];
+            
             query = new SqlCommand($"select gender_name from genders", DBHElper.sqlConnection);
             reader = query.ExecuteReader();
             while (reader.Read())
@@ -177,6 +195,15 @@ namespace Avokado
             {
                 useDeliveryCB.Checked = false;
             };
+        }
+
+        public static string row = null;
+
+        private void orderHistoryDGV_DoubleClick(object sender, EventArgs e)
+        {
+            row = index[orderHistoryDGV.CurrentCell.RowIndex].ToString();
+            listOfOrder list = new listOfOrder();
+            list.Show();
         }
     }
 }

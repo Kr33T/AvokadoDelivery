@@ -239,6 +239,8 @@
             this.Controls.Add(this.telephoneMTB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.MaximumSize = new System.Drawing.Size(931, 434);
+            this.MinimumSize = new System.Drawing.Size(931, 434);
             this.Name = "payment";
             this.Text = "mainMenu";
             this.Load += new System.EventHandler(this.mainMenu_Load);
