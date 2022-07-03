@@ -21,74 +21,102 @@ namespace Avokado
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DBHElper.openConnection(ref DBHElper.sqlConnection);
+            try
+            {
+                DBHElper.openConnection(ref DBHElper.sqlConnection);
+            }
+            catch
+            {
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void signInBTN_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(loginTB.Text))
+            try
             {
-                SqlCommand a = new SqlCommand($"select count(*) from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
-                if (a.ExecuteScalar().ToString().Equals("1"))
+                if (!String.IsNullOrEmpty(loginTB.Text))
                 {
-                    a = new SqlCommand($"select name from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
-                    userName = a.ExecuteScalar().ToString();
-                    a = new SqlCommand($"select id_buyer from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
-                    userId = a.ExecuteScalar().ToString();
-                    test menu = new test();
-                    menu.Show();
-                    this.Hide();
-
-                    menu.FormClosing += (obj, args) =>
+                    SqlCommand a = new SqlCommand($"select count(*) from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
+                    if (a.ExecuteScalar().ToString().Equals("1"))
                     {
-                        loginTB.Text = "";
-                        passwordTB.Text = "";
-                        this.Show();
-                    };
+                        a = new SqlCommand($"select name from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
+                        userName = a.ExecuteScalar().ToString();
+                        a = new SqlCommand($"select id_buyer from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
+                        userId = a.ExecuteScalar().ToString();
+                        mainMenu menu = new mainMenu();
+                        menu.Show();
+                        this.Hide();
+
+                        menu.FormClosing += (obj, args) =>
+                        {
+                            loginTB.Text = "";
+                            passwordTB.Text = "";
+                            this.Show();
+                        };
+                    }
+                    else
+                    {
+                        Controls.Add(new Label() { Text = "Такого пользователя нет в базе!", Location = new Point(0, 0), ForeColor = Color.FromArgb(200, 0, 0) });
+                    }
                 }
                 else
                 {
-                    Controls.Add(new Label() { Text = "Такого пользователя нет в базе!", Location = new Point(0, 0), ForeColor = Color.FromArgb(200, 0, 0) });
+                    MessageBox.Show("Поле ЛОГИН пустое!");
                 }
             }
-            else
+            catch
             {
-                MessageBox.Show("Поле ЛОГИН пустое!");
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void signUpL_Click(object sender, EventArgs e)
         {
-            registrationForm reg = new registrationForm();
-            reg.Show();
-            this.Hide();
-
-            reg.FormClosing += (obj, args) =>
+            try
             {
-                this.Show();
-            };
+                registrationForm reg = new registrationForm();
+                reg.Show();
+                this.Hide();
+
+                reg.FormClosing += (obj, args) =>
+                {
+                    this.Show();
+                };
+            }
+            catch
+            {
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         bool showPassword = true;
         
         private void label1_Click(object sender, EventArgs e)
         {
-            Point a;
-            if (showPassword)
+            try
             {
-                passwordTB.PasswordChar = '\0';
-                showPasswordL.Text = "скрыть пароль";
-                a = new Point(381, 262);
-                showPassword = !showPassword;
+                Point a;
+                if (showPassword)
+                {
+                    passwordTB.PasswordChar = '\0';
+                    showPasswordL.Text = "скрыть пароль";
+                    a = new Point(381, 262);
+                    showPassword = !showPassword;
+                }
+                else
+                {
+                    passwordTB.PasswordChar = '●';
+                    showPasswordL.Text = "показать пароль";
+                    a = new Point(371, 262);
+                    showPassword = !showPassword;
+                }
+                showPasswordL.Location = a;
             }
-            else
+            catch
             {
-                passwordTB.PasswordChar = '●';
-                showPasswordL.Text = "показать пароль";
-                a = new Point(371, 262);
-                showPassword = !showPassword;
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            showPasswordL.Location = a;
         }
     }
 }

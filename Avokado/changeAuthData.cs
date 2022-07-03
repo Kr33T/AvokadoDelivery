@@ -22,46 +22,92 @@ namespace Avokado
 
         private void button1_Click(object sender, EventArgs e)
         {
-            query = new SqlCommand($"select count(*) from buyers where id_buyer like '{authForm.userId}' and password like '{checkPasswordTB.Text}'", DBHElper.sqlConnection);
-            if (query.ExecuteScalar().ToString().Equals("1"))
+            try
             {
-                panel1.Visible = false;
-                this.Size = new Size(233, 312);
+                query = new SqlCommand($"select count(*) from buyers where id_buyer like '{authForm.userId}' and password like '{checkPasswordTB.Text}'", DBHElper.sqlConnection);
+                if (query.ExecuteScalar().ToString().Equals("1"))
+                {
+                    panel1.Visible = false;
+                    this.Size = new Size(233, 312);
+                }
+                else
+                {
+                    MessageBox.Show($"Пароль не совпадает!", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show($"Пароль не совпадает!", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void changeAuthData_Load(object sender, EventArgs e)
         {
-            domainUpDown1.SelectedIndex = 0;
-            query = new SqlCommand($"select login from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
-            loginTB.Text = query.ExecuteScalar().ToString();
-            panel1.Location = new Point(0, 0);
-            panel1.BringToFront();
-            this.Size = new Size(258, 139);//258 139
+            try
+            {
+                domainUpDown1.SelectedIndex = 0;
+                query = new SqlCommand($"select login from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                loginTB.Text = query.ExecuteScalar().ToString();
+                panel1.Location = new Point(0, 0);
+                panel1.BringToFront();
+                this.Size = new Size(258, 139);
+            }
+            catch
+            {
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            switch (domainUpDown1.SelectedIndex)
+            try
             {
-                case 0:
-                    if (passwordTB.Text == applyPasswordTB.Text)
-                    {
-                        query = new SqlCommand($"select password from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
-                        if (!passwordTB.Text.Equals(query.ExecuteScalar().ToString()))
+                switch (domainUpDown1.SelectedIndex)
+                {
+                    case 0:
+                        if (passwordTB.Text == applyPasswordTB.Text)
                         {
-                            query = new SqlCommand($"update buyers set password = @password where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
-                            query.Parameters.AddWithValue("password", passwordTB.Text);
-                            var res = MessageBox.Show("Уверены, что хотите изменить gfhjkm?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            query = new SqlCommand($"select password from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                            if (!passwordTB.Text.Equals(query.ExecuteScalar().ToString()))
+                            {
+                                query = new SqlCommand($"update buyers set password = @password where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                                query.Parameters.AddWithValue("password", passwordTB.Text);
+                                var res = MessageBox.Show("Уверены, что хотите изменить gfhjkm?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (res == DialogResult.Yes)
+                                {
+                                    if (query.ExecuteNonQuery().ToString().Equals("1"))
+                                    {
+                                        MessageBox.Show("Изменение пароля прошло успешно!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        this.Close();
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Действие отменено", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Такой пароль используется в данный момент!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        break;
+                    case 1:
+                        query = new SqlCommand($"select login from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                        if (!loginTB.Text.Equals(query.ExecuteScalar().ToString()))
+                        {
+                            query = new SqlCommand($"update buyers set login = @login where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                            query.Parameters.AddWithValue("login", loginTB.Text);
+                            var res = MessageBox.Show("Уверены, что хотите изменить логин?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                             if (res == DialogResult.Yes)
                             {
                                 if (query.ExecuteNonQuery().ToString().Equals("1"))
                                 {
-                                    MessageBox.Show("Изменение пароля прошло успешно!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show("Изменение логина прошло успешно!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     this.Close();
                                 }
                             }
@@ -72,52 +118,34 @@ namespace Avokado
                         }
                         else
                         {
-                            MessageBox.Show("Такой пароль используется в данный момент!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Такой логин уже используется!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    break;
-                case 1:
-                    query = new SqlCommand($"select login from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
-                    if (!loginTB.Text.Equals(query.ExecuteScalar().ToString()))
-                    {
-                        query = new SqlCommand($"update buyers set login = @login where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
-                        query.Parameters.AddWithValue("login", loginTB.Text);
-                        var res = MessageBox.Show("Уверены, что хотите изменить логин?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if(res == DialogResult.Yes)
-                        {
-                            if (query.ExecuteNonQuery().ToString().Equals("1"))
-                            {
-                                MessageBox.Show("Изменение логина прошло успешно!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                this.Close();
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Действие отменено", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Такой логин уже используется!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    break;
+                        break;
+                }
+            }
+            catch
+            {
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void cancelBTN_Click(object sender, EventArgs e)
         {
-            var res = MessageBox.Show("Уверены, что хотите отменить действие?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == DialogResult.Yes)
+            try
             {
-                this.Close();
+                var res = MessageBox.Show("Уверены, что хотите отменить действие?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Действие отменено", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Действие отменено", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -125,24 +153,31 @@ namespace Avokado
 
         private void showPasswordL_Click(object sender, EventArgs e)
         {
-            Point a;
-            if (showPassword)
+            try
             {
-                passwordTB.PasswordChar = '\0';
-                applyPasswordTB.PasswordChar = '\0';
-                showPasswordL.Text = "скрыть пароль";
-                a = new Point(113, 190);
-                showPassword = !showPassword;
+                Point a;
+                if (showPassword)
+                {
+                    passwordTB.PasswordChar = '\0';
+                    applyPasswordTB.PasswordChar = '\0';
+                    showPasswordL.Text = "скрыть пароль";
+                    a = new Point(113, 190);
+                    showPassword = !showPassword;
+                }
+                else
+                {
+                    passwordTB.PasswordChar = '●';
+                    applyPasswordTB.PasswordChar = '●';
+                    showPasswordL.Text = "показать пароль";
+                    a = new Point(103, 190);
+                    showPassword = !showPassword;
+                }
+                showPasswordL.Location = a;
             }
-            else
+            catch
             {
-                passwordTB.PasswordChar = '●';
-                applyPasswordTB.PasswordChar = '●';
-                showPasswordL.Text = "показать пароль";
-                a = new Point(103, 190);
-                showPassword = !showPassword;
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            showPasswordL.Location = a;
         }
 
         private void passwordTB_TextChanged(object sender, EventArgs e)
@@ -152,16 +187,23 @@ namespace Avokado
 
         private void domainUpDown1_SelectedItemChanged(object sender, EventArgs e)
         {
-            switch (domainUpDown1.SelectedIndex)
+            try
             {
-                case 0:
-                    loginTB.Visible = label2.Visible = false;
-                    label3.Visible = label4.Visible = passwordTB.Visible = applyPasswordTB.Visible = showPasswordL.Visible = true;
-                    break;
-                case 1:
-                    loginTB.Visible = label2.Visible = true;
-                    label3.Visible = label4.Visible = passwordTB.Visible = applyPasswordTB.Visible = showPasswordL.Visible = false;
-                    break;
+                switch (domainUpDown1.SelectedIndex)
+                {
+                    case 0:
+                        loginTB.Visible = label2.Visible = false;
+                        label3.Visible = label4.Visible = passwordTB.Visible = applyPasswordTB.Visible = showPasswordL.Visible = true;
+                        break;
+                    case 1:
+                        loginTB.Visible = label2.Visible = true;
+                        label3.Visible = label4.Visible = passwordTB.Visible = applyPasswordTB.Visible = showPasswordL.Visible = false;
+                        break;
+                }
+            }
+            catch
+            {
+                MessageBox.Show($"Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
