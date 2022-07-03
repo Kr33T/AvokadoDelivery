@@ -95,7 +95,7 @@ namespace Avokado
             else
             {
                 countGoodsL.Text = $"Продуктов: {query.ExecuteScalar()}";
-                query = new SqlCommand($"select sum(price) from shoppingCart sc join storage s on sc.id_good = s.id_good where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                query = new SqlCommand($"select sum(price * amount) from shoppingCart sc join storage s on sc.id_good = s.id_good where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
                 priceCountL.Text = query.ExecuteScalar().ToString();
             }
         }
@@ -136,29 +136,46 @@ namespace Avokado
             }
         }
 
+        static public bool checkDelivery = false;
+
         private void buyBTN_Click(object sender, EventArgs e)
         {
+            query = new SqlCommand($"select count(*) from shoppingcart where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+            if (!query.ExecuteScalar().ToString().Equals("0"))
+            {
+                payment payment = new payment();
+                payment.Show();
 
+                payment.FormClosing += (obj, args) =>
+                {
+                    updateCart();
+                };
+            }
+            else
+            {
+                MessageBox.Show("Ваша корзина пуста!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (deliveryCB.Checked)
             {
+                checkDelivery = true;
                 SqlCommand a = new SqlCommand($"select id_address from buyers where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
                 if (String.IsNullOrEmpty(a.ExecuteScalar().ToString()))
                 {
-                    deliveryCB.Checked = false;
+                    deliveryCB.Checked = checkDelivery = false;
                     var res = MessageBox.Show($"Вы не еще ни разу не указывали адрес\nХотите ввести новый?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (res == DialogResult.Yes)
                     {
                         changeAddress change = new changeAddress();
                         change.Show();
-                        deliveryCB.Checked = false;
+                        deliveryCB.Checked = checkDelivery = false;
                     }
                     else
                     {
-                        deliveryCB.Checked = false;
+                        deliveryCB.Checked = checkDelivery = false;
                     }
                 }
                 else
@@ -174,6 +191,7 @@ namespace Avokado
             }
             else
             {
+                checkDelivery = false;
                 deliveryPriceL.Text = $"0";
                 priceL.Text = (Convert.ToInt32(priceL.Text) - 400).ToString();
                 addressL.Visible = false;
@@ -188,8 +206,8 @@ namespace Avokado
 
             change.FormClosing += (obj, args) =>
             {
-                deliveryCB.Checked = false;
-                deliveryCB.Checked = true;
+                deliveryCB.Checked = checkDelivery = false;
+                deliveryCB.Checked = checkDelivery = true;
             };
         }
 
