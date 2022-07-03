@@ -32,7 +32,7 @@ namespace Avokado
                 a.Parameters.AddWithValue("house", houseTB.Text);
                 a.ExecuteNonQuery();
                 SqlCommand getAddressID = new SqlCommand($"select id_address from addresses where [index] like '{indexMTB.Text}' and country like 'Россия' and region like '{regionTB.Text}' and district like '{districtTB.Text}' and locality like '{localityTB.Text}' and street like '{streetTB.Text}' and house like '{houseTB.Text}'", DBHElper.sqlConnection);
-                a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, id_address) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @id_address)", DBHElper.sqlConnection);
+                a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, id_address, useDelivery) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @id_address, @useDelivery)", DBHElper.sqlConnection);
                 a.Parameters.AddWithValue("surname", surnameTB.Text);
                 a.Parameters.AddWithValue("name", nameTB.Text);
                 a.Parameters.AddWithValue("midname", midnameTB.Text);
@@ -50,14 +50,16 @@ namespace Avokado
                     a.Parameters.AddWithValue("email", emailTB.Text);
                 }
                 a.Parameters.AddWithValue("id_address", getAddressID.ExecuteScalar().ToString());
+                a.Parameters.AddWithValue("useDelivery", checkDeliveryCB.CheckState);
                 if (a.ExecuteNonQuery() == 1)
                 {
                     MessageBox.Show("Добавление прошло успешно!");
+                    this.Close();
                 }
             }
             else
             {
-                SqlCommand a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email)", DBHElper.sqlConnection);
+                SqlCommand a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, useDelivery) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @useDelivery)", DBHElper.sqlConnection);
                 a.Parameters.AddWithValue("surname", surnameTB.Text);
                 a.Parameters.AddWithValue("name", nameTB.Text);
                 a.Parameters.AddWithValue("midname", midnameTB.Text);
@@ -74,9 +76,11 @@ namespace Avokado
                 {
                     a.Parameters.AddWithValue("email", emailTB.Text);
                 }
-                if(a.ExecuteNonQuery() == 1)
+                a.Parameters.AddWithValue("useDelivery", checkDeliveryCB.CheckState);
+                if (a.ExecuteNonQuery() == 1)
                 {
                     MessageBox.Show("Добавление прошло успешно!");
+                    this.Close();
                 }
             }
         }
@@ -130,11 +134,13 @@ namespace Avokado
             if (emailTB.Text.Contains('@'))
             {
                 endingEmailCB.Visible = false;
+                emailTB.Size = new Size(179, 20);
                 atCheck = false;
             }
             else
             {
                 endingEmailCB.Visible = true;
+                emailTB.Size = new Size(100, 20);
                 atCheck = true;
             }
         }

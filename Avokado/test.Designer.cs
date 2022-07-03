@@ -48,10 +48,11 @@
             this.userBTN = new System.Windows.Forms.Button();
             this.cartBTN = new System.Windows.Forms.Button();
             this.actionsP = new System.Windows.Forms.Panel();
-            this.closePanel = new System.Windows.Forms.Button();
-            this.userDataBTN = new System.Windows.Forms.Button();
-            this.orderHistoryBTN = new System.Windows.Forms.Button();
             this.logOutBTN = new System.Windows.Forms.Button();
+            this.orderHistoryBTN = new System.Windows.Forms.Button();
+            this.userDataBTN = new System.Windows.Forms.Button();
+            this.closePanel = new System.Windows.Forms.Button();
+            this.updateBTN = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPriceNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minPriceNUD)).BeginInit();
@@ -218,6 +219,7 @@
             this.cartBTN.TabIndex = 18;
             this.cartBTN.Text = "Корзина";
             this.cartBTN.UseVisualStyleBackColor = true;
+            this.cartBTN.Click += new System.EventHandler(this.cartBTN_Click);
             // 
             // actionsP
             // 
@@ -231,6 +233,36 @@
             this.actionsP.TabIndex = 19;
             this.actionsP.Visible = false;
             // 
+            // logOutBTN
+            // 
+            this.logOutBTN.Location = new System.Drawing.Point(46, 72);
+            this.logOutBTN.Name = "logOutBTN";
+            this.logOutBTN.Size = new System.Drawing.Size(252, 26);
+            this.logOutBTN.TabIndex = 3;
+            this.logOutBTN.Text = "Выход";
+            this.logOutBTN.UseVisualStyleBackColor = true;
+            this.logOutBTN.Click += new System.EventHandler(this.logOutBTN_Click);
+            // 
+            // orderHistoryBTN
+            // 
+            this.orderHistoryBTN.Location = new System.Drawing.Point(46, 40);
+            this.orderHistoryBTN.Name = "orderHistoryBTN";
+            this.orderHistoryBTN.Size = new System.Drawing.Size(252, 26);
+            this.orderHistoryBTN.TabIndex = 2;
+            this.orderHistoryBTN.Text = "История заказов";
+            this.orderHistoryBTN.UseVisualStyleBackColor = true;
+            this.orderHistoryBTN.Click += new System.EventHandler(this.orderHistoryBTN_Click);
+            // 
+            // userDataBTN
+            // 
+            this.userDataBTN.Location = new System.Drawing.Point(46, 8);
+            this.userDataBTN.Name = "userDataBTN";
+            this.userDataBTN.Size = new System.Drawing.Size(252, 26);
+            this.userDataBTN.TabIndex = 1;
+            this.userDataBTN.Text = "Личные данные";
+            this.userDataBTN.UseVisualStyleBackColor = true;
+            this.userDataBTN.Click += new System.EventHandler(this.userDataBTN_Click);
+            // 
             // closePanel
             // 
             this.closePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(50)))), ((int)(((byte)(0)))));
@@ -243,35 +275,15 @@
             this.closePanel.UseVisualStyleBackColor = false;
             this.closePanel.Click += new System.EventHandler(this.closePanel_Click);
             // 
-            // userDataBTN
+            // updateBTN
             // 
-            this.userDataBTN.Location = new System.Drawing.Point(46, 8);
-            this.userDataBTN.Name = "userDataBTN";
-            this.userDataBTN.Size = new System.Drawing.Size(252, 26);
-            this.userDataBTN.TabIndex = 1;
-            this.userDataBTN.Text = "Личные данные";
-            this.userDataBTN.UseVisualStyleBackColor = true;
-            this.userDataBTN.Click += new System.EventHandler(this.userDataBTN_Click);
-            // 
-            // orderHistoryBTN
-            // 
-            this.orderHistoryBTN.Location = new System.Drawing.Point(46, 40);
-            this.orderHistoryBTN.Name = "orderHistoryBTN";
-            this.orderHistoryBTN.Size = new System.Drawing.Size(252, 26);
-            this.orderHistoryBTN.TabIndex = 2;
-            this.orderHistoryBTN.Text = "История заказов";
-            this.orderHistoryBTN.UseVisualStyleBackColor = true;
-            this.orderHistoryBTN.Click += new System.EventHandler(this.orderHistoryBTN_Click);
-            // 
-            // logOutBTN
-            // 
-            this.logOutBTN.Location = new System.Drawing.Point(46, 72);
-            this.logOutBTN.Name = "logOutBTN";
-            this.logOutBTN.Size = new System.Drawing.Size(252, 26);
-            this.logOutBTN.TabIndex = 3;
-            this.logOutBTN.Text = "Выход";
-            this.logOutBTN.UseVisualStyleBackColor = true;
-            this.logOutBTN.Click += new System.EventHandler(this.logOutBTN_Click);
+            this.updateBTN.Location = new System.Drawing.Point(1197, 120);
+            this.updateBTN.Name = "updateBTN";
+            this.updateBTN.Size = new System.Drawing.Size(75, 23);
+            this.updateBTN.TabIndex = 4;
+            this.updateBTN.Text = "Обновить";
+            this.updateBTN.UseVisualStyleBackColor = true;
+            this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
             // 
             // test
             // 
@@ -279,6 +291,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1284, 741);
             this.Controls.Add(this.actionsP);
+            this.Controls.Add(this.updateBTN);
             this.Controls.Add(this.cartBTN);
             this.Controls.Add(this.userBTN);
             this.Controls.Add(this.label8);
@@ -336,5 +349,6 @@
         private System.Windows.Forms.Button orderHistoryBTN;
         private System.Windows.Forms.Button userDataBTN;
         private System.Windows.Forms.Button closePanel;
+        private System.Windows.Forms.Button updateBTN;
     }
 }

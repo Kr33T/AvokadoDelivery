@@ -13,7 +13,7 @@ namespace Avokado
 {
     public partial class authForm : Form
     {
-        public static string userName = null;
+        public static string userName = null, userId = null;
         public authForm()
         {
             InitializeComponent();
@@ -33,6 +33,8 @@ namespace Avokado
                 {
                     a = new SqlCommand($"select name from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
                     userName = a.ExecuteScalar().ToString();
+                    a = new SqlCommand($"select id_buyer from buyers where login like '{loginTB.Text}' and password like '{passwordTB.Text}'", DBHElper.sqlConnection);
+                    userId = a.ExecuteScalar().ToString();
                     test menu = new test();
                     menu.Show();
                     this.Hide();

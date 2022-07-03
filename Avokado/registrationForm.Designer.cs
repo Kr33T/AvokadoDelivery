@@ -40,12 +40,18 @@
             this.regBTN = new System.Windows.Forms.Button();
             this.checkDeliveryCB = new System.Windows.Forms.CheckBox();
             this.addressInfoP = new System.Windows.Forms.Panel();
-            this.indexMTB = new System.Windows.Forms.MaskedTextBox();
-            this.regionTB = new System.Windows.Forms.TextBox();
-            this.districtTB = new System.Windows.Forms.TextBox();
-            this.localityTB = new System.Windows.Forms.TextBox();
-            this.streetTB = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.houseTB = new System.Windows.Forms.TextBox();
+            this.streetTB = new System.Windows.Forms.TextBox();
+            this.localityTB = new System.Windows.Forms.TextBox();
+            this.districtTB = new System.Windows.Forms.TextBox();
+            this.regionTB = new System.Windows.Forms.TextBox();
+            this.indexMTB = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -55,12 +61,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.showPasswordL = new System.Windows.Forms.Label();
             this.addressInfoP.SuspendLayout();
             this.SuspendLayout();
@@ -180,34 +180,66 @@
             this.addressInfoP.Size = new System.Drawing.Size(397, 80);
             this.addressInfoP.TabIndex = 11;
             // 
-            // indexMTB
+            // label15
             // 
-            this.indexMTB.Location = new System.Drawing.Point(64, 3);
-            this.indexMTB.Mask = "000000";
-            this.indexMTB.Name = "indexMTB";
-            this.indexMTB.Size = new System.Drawing.Size(100, 20);
-            this.indexMTB.TabIndex = 0;
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(179, 58);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(30, 13);
+            this.label15.TabIndex = 25;
+            this.label15.Text = "Дом";
             // 
-            // regionTB
+            // label14
             // 
-            this.regionTB.Location = new System.Drawing.Point(64, 29);
-            this.regionTB.Name = "regionTB";
-            this.regionTB.Size = new System.Drawing.Size(100, 20);
-            this.regionTB.TabIndex = 1;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(179, 32);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(39, 13);
+            this.label14.TabIndex = 24;
+            this.label14.Text = "Улица";
             // 
-            // districtTB
+            // label13
             // 
-            this.districtTB.Location = new System.Drawing.Point(64, 55);
-            this.districtTB.Name = "districtTB";
-            this.districtTB.Size = new System.Drawing.Size(100, 20);
-            this.districtTB.TabIndex = 3;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(179, 6);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(102, 13);
+            this.label13.TabIndex = 23;
+            this.label13.Text = "Населенный пункт";
             // 
-            // localityTB
+            // label12
             // 
-            this.localityTB.Location = new System.Drawing.Point(287, 3);
-            this.localityTB.Name = "localityTB";
-            this.localityTB.Size = new System.Drawing.Size(100, 20);
-            this.localityTB.TabIndex = 4;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 58);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(38, 13);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "Район";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 32);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Область";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 6);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(45, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Индекс";
+            // 
+            // houseTB
+            // 
+            this.houseTB.Location = new System.Drawing.Point(287, 55);
+            this.houseTB.Name = "houseTB";
+            this.houseTB.Size = new System.Drawing.Size(100, 20);
+            this.houseTB.TabIndex = 6;
             // 
             // streetTB
             // 
@@ -216,12 +248,34 @@
             this.streetTB.Size = new System.Drawing.Size(100, 20);
             this.streetTB.TabIndex = 5;
             // 
-            // houseTB
+            // localityTB
             // 
-            this.houseTB.Location = new System.Drawing.Point(287, 55);
-            this.houseTB.Name = "houseTB";
-            this.houseTB.Size = new System.Drawing.Size(100, 20);
-            this.houseTB.TabIndex = 6;
+            this.localityTB.Location = new System.Drawing.Point(287, 3);
+            this.localityTB.Name = "localityTB";
+            this.localityTB.Size = new System.Drawing.Size(100, 20);
+            this.localityTB.TabIndex = 4;
+            // 
+            // districtTB
+            // 
+            this.districtTB.Location = new System.Drawing.Point(64, 55);
+            this.districtTB.Name = "districtTB";
+            this.districtTB.Size = new System.Drawing.Size(100, 20);
+            this.districtTB.TabIndex = 3;
+            // 
+            // regionTB
+            // 
+            this.regionTB.Location = new System.Drawing.Point(64, 29);
+            this.regionTB.Name = "regionTB";
+            this.regionTB.Size = new System.Drawing.Size(100, 20);
+            this.regionTB.TabIndex = 1;
+            // 
+            // indexMTB
+            // 
+            this.indexMTB.Location = new System.Drawing.Point(64, 3);
+            this.indexMTB.Mask = "000000";
+            this.indexMTB.Name = "indexMTB";
+            this.indexMTB.Size = new System.Drawing.Size(100, 20);
+            this.indexMTB.TabIndex = 0;
             // 
             // label1
             // 
@@ -304,60 +358,6 @@
             this.label9.Size = new System.Drawing.Size(45, 13);
             this.label9.TabIndex = 19;
             this.label9.Text = "Пароль";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 6);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 13);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "Индекс";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 32);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(50, 13);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "Область";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 58);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(38, 13);
-            this.label12.TabIndex = 22;
-            this.label12.Text = "Район";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(179, 6);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(102, 13);
-            this.label13.TabIndex = 23;
-            this.label13.Text = "Населенный пункт";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(179, 32);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(39, 13);
-            this.label14.TabIndex = 24;
-            this.label14.Text = "Улица";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(179, 58);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 13);
-            this.label15.TabIndex = 25;
-            this.label15.Text = "Дом";
             // 
             // showPasswordL
             // 

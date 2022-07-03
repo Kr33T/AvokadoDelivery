@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="changeAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="changeAddress.Designer.cs">
+      <DependentUpon>changeAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="changeAuthData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="changeAuthData.Designer.cs">
+      <DependentUpon>changeAuthData.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBHelper.cs" />
     <Compile Include="authForm.cs">
       <SubType>Form</SubType>
@@ -73,6 +85,12 @@
     <Compile Include="registrationForm.Designer.cs">
       <DependentUpon>registrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShoppingCart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShoppingCart.Designer.cs">
+      <DependentUpon>ShoppingCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="test.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +105,12 @@
     </Compile>
     <EmbeddedResource Include="authForm.resx">
       <DependentUpon>authForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="changeAddress.resx">
+      <DependentUpon>changeAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="changeAuthData.resx">
+      <DependentUpon>changeAuthData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainMenu.resx">
       <DependentUpon>mainMenu.cs</DependentUpon>
@@ -103,8 +127,14 @@
     <EmbeddedResource Include="registrationForm.resx">
       <DependentUpon>registrationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ShoppingCart.resx">
+      <DependentUpon>ShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="test.resx">
       <DependentUpon>test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userData.resx">
+      <DependentUpon>userData.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

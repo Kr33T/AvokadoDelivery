@@ -142,7 +142,7 @@ namespace Avokado
 
             int i = 0;
 
-            SqlCommand a = new SqlCommand($"select g.id_good from goods g join storage s on s.id_good = g.id_good where s.price >= '{minPriceNUD.Value}' and s.price <= '{maxPriceNUD.Value}'{sort}", DBHElper.sqlConnection);
+            SqlCommand a = new SqlCommand($"select g.id_good from goods g join storage s on s.id_good = g.id_good where s.price >= '{minPriceNUD.Value}' and s.price <= '{maxPriceNUD.Value}' and quantity > 0{sort}", DBHElper.sqlConnection);
             SqlDataReader reader = a.ExecuteReader();
             while (reader.Read())
             {
@@ -174,7 +174,7 @@ namespace Avokado
                 reader = query.ExecuteReader();
                 reader.Read();
                 FileStream fsBLOBFile = new FileStream(reader.GetString(0).ToString(), FileMode.Open, FileAccess.Read);
-                panels[i].Controls.Add(pic[i] = new PictureBox() { BackColor = Color.Azure, Size = new Size(panels[i].Width, 300), Location = new Point(0, 0), Image = Image.FromStream(fsBLOBFile), SizeMode = PictureBoxSizeMode.Zoom });
+                panels[i].Controls.Add(pic[i] = new PictureBox() { Size = new Size(panels[i].Width, 300), Location = new Point(0, 0), Image = Image.FromStream(fsBLOBFile), SizeMode = PictureBoxSizeMode.Zoom });
                 panels[i].Controls.Add(name[i] = new Label() { Text = $"{reader.GetString(1)}", Location = new Point(0, pic[i].Height + 20) });
                 panels[i].Controls.Add(price[i] = new Label() { Text = $"{reader.GetInt32(2)}", Location = new Point(panels[i].Size.Width - 100, pic[i].Height + 20), TextAlign = ContentAlignment.TopRight });
                 panels[i].Controls.Add(add[i] = new Button() { Text = $"Добавить в корзину товар", Location = new Point(0, price[i].Location.Y + price[i].Size.Height), Size = new Size(panels[i].Width - 100, 22), Tag = i });
@@ -182,8 +182,27 @@ namespace Avokado
                 reader.Close();
                 add[i].Click += (obj, args) =>
                 {
-                    query = new SqlCommand($"insert into shoppingCart (id_good, amount) values ('{index[Convert.ToInt32((obj as Button).Tag)]}', '{amount[Convert.ToInt32((obj as Button).Tag)].Value}')", DBHElper.sqlConnection);
+                    query = new SqlCommand($"select count(*) from shoppingCart where id_buyer like '{authForm.userId}' and id_good like '{index[Convert.ToInt32((obj as Button).Tag)]}'", DBHElper.sqlConnection);
+                    if (query.ExecuteScalar().ToString().Equals("1"))
+                    {
+                        query = new SqlCommand($"update shoppingCart set amount = amount + {amount[Convert.ToInt32((obj as Button).Tag)].Value} where id_good like '{index[Convert.ToInt32((obj as Button).Tag)]}' and id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
+                        query.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        query = new SqlCommand($"insert into shoppingCart (id_buyer, id_good, amount) values ('{authForm.userId}', '{index[Convert.ToInt32((obj as Button).Tag)]}', '{amount[Convert.ToInt32((obj as Button).Tag)].Value}')", DBHElper.sqlConnection);
+                        query.ExecuteNonQuery();
+                    }
+                    query = new SqlCommand($"update storage set quantity = quantity - {amount[Convert.ToInt32((obj as Button).Tag)].Value} where id_good like '{index[Convert.ToInt32((obj as Button).Tag)]}'", DBHElper.sqlConnection);
                     query.ExecuteNonQuery();
+                    amount[Convert.ToInt32((obj as Button).Tag)].Value = amount[Convert.ToInt32((obj as Button).Tag)].Minimum;
+                    query = new SqlCommand($"select quantity from storage where id_good like '{index[Convert.ToInt32((obj as Button).Tag)]}'", DBHElper.sqlConnection);
+                    amount[Convert.ToInt32((obj as Button).Tag)].Maximum = (int)query.ExecuteScalar();
+                    query = new SqlCommand($"select quantity from storage where id_good like '{index[Convert.ToInt32((obj as Button).Tag)]}'", DBHElper.sqlConnection);
+                    if (query.ExecuteScalar().ToString().Equals("0"))
+                    {
+                        updatePanelOfGoods();
+                    }
                 };
                 if (ind == 3)
                 {
@@ -228,6 +247,7 @@ namespace Avokado
             if (checkShowActions)
             {
                 actionsP.Visible = true;
+                actionsP.Location = new Point(980, 79);
                 checkShowActions = !checkShowActions;
             }
             else
@@ -258,6 +278,22 @@ namespace Avokado
         {
             orderHistory order = new orderHistory();
             order.Show();
+        }
+
+        private void cartBTN_Click(object sender, EventArgs e)
+        {
+            ShoppingCart cart = new ShoppingCart();
+            cart.Show();
+
+            cart.FormClosing += (obj, args) =>
+            {
+                updatePanelOfGoods();
+            };
+        }
+
+        private void updateBTN_Click(object sender, EventArgs e)
+        {
+            updatePanelOfGoods();
         }
 
         private void maxPriceNUD_ValueChanged(object sender, EventArgs e)
