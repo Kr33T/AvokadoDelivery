@@ -13,6 +13,8 @@ namespace Avokado
 {
     public partial class registrationForm : Form
     {
+        SqlCommand query = null;
+
         public registrationForm()
         {
             InitializeComponent();
@@ -22,68 +24,76 @@ namespace Avokado
         {
             try
             {
-                if (checkDeliveryCB.Checked)
+                query = new SqlCommand($"select count(*) from buyers where login like '{loginTB.Text}'", DBHElper.sqlConnection);
+                if (!query.ExecuteScalar().ToString().Equals("1"))
                 {
-                    SqlCommand a = new SqlCommand($"insert into addresses ([index], country, region, district, locality, street, house) values (@index, @country, @region, @district, @locality, @street, @house)", DBHElper.sqlConnection);
-                    a.Parameters.AddWithValue("index", indexMTB.Text);
-                    a.Parameters.AddWithValue("country", "Россия");
-                    a.Parameters.AddWithValue("region", regionTB.Text);
-                    a.Parameters.AddWithValue("district", districtTB.Text);
-                    a.Parameters.AddWithValue("locality", localityTB.Text);
-                    a.Parameters.AddWithValue("street", streetTB.Text);
-                    a.Parameters.AddWithValue("house", houseTB.Text);
-                    a.ExecuteNonQuery();
-                    SqlCommand getAddressID = new SqlCommand($"select id_address from addresses where [index] like '{indexMTB.Text}' and country like 'Россия' and region like '{regionTB.Text}' and district like '{districtTB.Text}' and locality like '{localityTB.Text}' and street like '{streetTB.Text}' and house like '{houseTB.Text}'", DBHElper.sqlConnection);
-                    a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, id_address, useDelivery) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @id_address, @useDelivery)", DBHElper.sqlConnection);
-                    a.Parameters.AddWithValue("surname", surnameTB.Text);
-                    a.Parameters.AddWithValue("name", nameTB.Text);
-                    a.Parameters.AddWithValue("midname", midnameTB.Text);
-                    SqlCommand getGenderID = new SqlCommand($"select id_gender from genders where gender_name like '{genderCB.SelectedItem}'", DBHElper.sqlConnection);
-                    a.Parameters.AddWithValue("id_gender", getGenderID.ExecuteScalar().ToString());
-                    a.Parameters.AddWithValue("login", loginTB.Text);
-                    a.Parameters.AddWithValue("password", passwordTB.Text);
-                    a.Parameters.AddWithValue("telephone", telephoneMTB.Text);
-                    if (atCheck)
+                    if (checkDeliveryCB.Checked)
                     {
-                        a.Parameters.AddWithValue("email", emailTB.Text + endingEmailCB.SelectedItem);
+                        SqlCommand a = new SqlCommand($"insert into addresses ([index], country, region, district, locality, street, house) values (@index, @country, @region, @district, @locality, @street, @house)", DBHElper.sqlConnection);
+                        a.Parameters.AddWithValue("index", indexMTB.Text);
+                        a.Parameters.AddWithValue("country", "Россия");
+                        a.Parameters.AddWithValue("region", regionTB.Text);
+                        a.Parameters.AddWithValue("district", districtTB.Text);
+                        a.Parameters.AddWithValue("locality", localityTB.Text);
+                        a.Parameters.AddWithValue("street", streetTB.Text);
+                        a.Parameters.AddWithValue("house", houseTB.Text);
+                        a.ExecuteNonQuery();
+                        SqlCommand getAddressID = new SqlCommand($"select id_address from addresses where [index] like '{indexMTB.Text}' and country like 'Россия' and region like '{regionTB.Text}' and district like '{districtTB.Text}' and locality like '{localityTB.Text}' and street like '{streetTB.Text}' and house like '{houseTB.Text}'", DBHElper.sqlConnection);
+                        a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, id_address, useDelivery) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @id_address, @useDelivery)", DBHElper.sqlConnection);
+                        a.Parameters.AddWithValue("surname", surnameTB.Text);
+                        a.Parameters.AddWithValue("name", nameTB.Text);
+                        a.Parameters.AddWithValue("midname", midnameTB.Text);
+                        SqlCommand getGenderID = new SqlCommand($"select id_gender from genders where gender_name like '{genderCB.SelectedItem}'", DBHElper.sqlConnection);
+                        a.Parameters.AddWithValue("id_gender", getGenderID.ExecuteScalar().ToString());
+                        a.Parameters.AddWithValue("login", loginTB.Text);
+                        a.Parameters.AddWithValue("password", passwordTB.Text);
+                        a.Parameters.AddWithValue("telephone", telephoneMTB.Text);
+                        if (atCheck)
+                        {
+                            a.Parameters.AddWithValue("email", emailTB.Text + endingEmailCB.SelectedItem);
+                        }
+                        else
+                        {
+                            a.Parameters.AddWithValue("email", emailTB.Text);
+                        }
+                        a.Parameters.AddWithValue("id_address", getAddressID.ExecuteScalar().ToString());
+                        a.Parameters.AddWithValue("useDelivery", checkDeliveryCB.CheckState);
+                        if (a.ExecuteNonQuery() == 1)
+                        {
+                            MessageBox.Show("Добавление прошло успешно!");
+                            this.Close();
+                        }
                     }
                     else
                     {
-                        a.Parameters.AddWithValue("email", emailTB.Text);
-                    }
-                    a.Parameters.AddWithValue("id_address", getAddressID.ExecuteScalar().ToString());
-                    a.Parameters.AddWithValue("useDelivery", checkDeliveryCB.CheckState);
-                    if (a.ExecuteNonQuery() == 1)
-                    {
-                        MessageBox.Show("Добавление прошло успешно!");
-                        this.Close();
+                        SqlCommand a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, useDelivery) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @useDelivery)", DBHElper.sqlConnection);
+                        a.Parameters.AddWithValue("surname", surnameTB.Text);
+                        a.Parameters.AddWithValue("name", nameTB.Text);
+                        a.Parameters.AddWithValue("midname", midnameTB.Text);
+                        SqlCommand getGenderID = new SqlCommand($"select id_gender from genders where gender_name like '{genderCB.SelectedItem}'", DBHElper.sqlConnection);
+                        a.Parameters.AddWithValue("id_gender", getGenderID.ExecuteScalar().ToString());
+                        a.Parameters.AddWithValue("login", loginTB.Text);
+                        a.Parameters.AddWithValue("password", passwordTB.Text);
+                        a.Parameters.AddWithValue("telephone", telephoneMTB.Text);
+                        if (atCheck)
+                        {
+                            a.Parameters.AddWithValue("email", emailTB.Text + endingEmailCB.SelectedItem);
+                        }
+                        else
+                        {
+                            a.Parameters.AddWithValue("email", emailTB.Text);
+                        }
+                        a.Parameters.AddWithValue("useDelivery", checkDeliveryCB.CheckState);
+                        if (a.ExecuteNonQuery() == 1)
+                        {
+                            MessageBox.Show("Добавление прошло успешно!");
+                            this.Close();
+                        }
                     }
                 }
                 else
                 {
-                    SqlCommand a = new SqlCommand($"insert into buyers (surname, name, midname, id_gender, login, password, telephone, email, useDelivery) values (@surname, @name, @midname, @id_gender, @login, @password, @telephone, @email, @useDelivery)", DBHElper.sqlConnection);
-                    a.Parameters.AddWithValue("surname", surnameTB.Text);
-                    a.Parameters.AddWithValue("name", nameTB.Text);
-                    a.Parameters.AddWithValue("midname", midnameTB.Text);
-                    SqlCommand getGenderID = new SqlCommand($"select id_gender from genders where gender_name like '{genderCB.SelectedItem}'", DBHElper.sqlConnection);
-                    a.Parameters.AddWithValue("id_gender", getGenderID.ExecuteScalar().ToString());
-                    a.Parameters.AddWithValue("login", loginTB.Text);
-                    a.Parameters.AddWithValue("password", passwordTB.Text);
-                    a.Parameters.AddWithValue("telephone", telephoneMTB.Text);
-                    if (atCheck)
-                    {
-                        a.Parameters.AddWithValue("email", emailTB.Text + endingEmailCB.SelectedItem);
-                    }
-                    else
-                    {
-                        a.Parameters.AddWithValue("email", emailTB.Text);
-                    }
-                    a.Parameters.AddWithValue("useDelivery", checkDeliveryCB.CheckState);
-                    if (a.ExecuteNonQuery() == 1)
-                    {
-                        MessageBox.Show("Добавление прошло успешно!");
-                        this.Close();
-                    }
+                    MessageBox.Show("Пользователь с таки логином уже зарегистрирован!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch

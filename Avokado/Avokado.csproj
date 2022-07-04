@@ -65,6 +65,7 @@
     <Compile Include="authForm.Designer.cs">
       <DependentUpon>authForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="debugAndTrace.cs" />
     <Compile Include="listOfOrder.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -97,18 +97,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(215, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 13);
+            this.label1.Size = new System.Drawing.Size(212, 18);
             this.label1.TabIndex = 7;
             this.label1.Text = "Поиск по названию продукта";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 463);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(9, 458);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.Size = new System.Drawing.Size(80, 18);
             this.label2.TabIndex = 0;
             this.label2.Text = "Категории";
             // 
@@ -149,9 +151,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 144);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(12, 141);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(33, 13);
+            this.label5.Size = new System.Drawing.Size(43, 18);
             this.label5.TabIndex = 12;
             this.label5.Text = "Цена";
             // 
@@ -194,14 +197,16 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 206);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label8.Location = new System.Drawing.Point(9, 201);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(128, 13);
+            this.label8.Size = new System.Drawing.Size(173, 18);
             this.label8.TabIndex = 16;
             this.label8.Text = "Брэнды/произовдители";
             // 
             // userBTN
             // 
+            this.userBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.userBTN.Location = new System.Drawing.Point(1132, 0);
             this.userBTN.Name = "userBTN";
             this.userBTN.Size = new System.Drawing.Size(154, 81);
@@ -212,6 +217,7 @@
             // 
             // cartBTN
             // 
+            this.cartBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cartBTN.Location = new System.Drawing.Point(980, 0);
             this.cartBTN.Name = "cartBTN";
             this.cartBTN.Size = new System.Drawing.Size(154, 81);
@@ -233,6 +239,7 @@
             // 
             // logOutBTN
             // 
+            this.logOutBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logOutBTN.Location = new System.Drawing.Point(46, 40);
             this.logOutBTN.Name = "logOutBTN";
             this.logOutBTN.Size = new System.Drawing.Size(252, 26);
@@ -243,6 +250,7 @@
             // 
             // userDataBTN
             // 
+            this.userDataBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.userDataBTN.Location = new System.Drawing.Point(46, 8);
             this.userDataBTN.Name = "userDataBTN";
             this.userDataBTN.Size = new System.Drawing.Size(252, 26);
@@ -253,7 +261,7 @@
             // 
             // closePanel
             // 
-            this.closePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(50)))), ((int)(((byte)(0)))));
+            this.closePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.closePanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closePanel.Location = new System.Drawing.Point(0, 0);
             this.closePanel.Name = "closePanel";
@@ -273,7 +281,7 @@
             this.updateBTN.UseVisualStyleBackColor = true;
             this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
             // 
-            // test
+            // mainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -300,7 +308,7 @@
             this.Controls.Add(this.productsP);
             this.MaximumSize = new System.Drawing.Size(1300, 780);
             this.MinimumSize = new System.Drawing.Size(1300, 780);
-            this.Name = "test";
+            this.Name = "mainMenu";
             this.Text = "test";
             this.Load += new System.EventHandler(this.test_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

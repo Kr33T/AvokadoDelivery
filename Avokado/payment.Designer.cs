@@ -242,7 +242,7 @@
             this.MaximumSize = new System.Drawing.Size(931, 434);
             this.MinimumSize = new System.Drawing.Size(931, 434);
             this.Name = "payment";
-            this.Text = "mainMenu";
+            this.Text = "payment";
             this.Load += new System.EventHandler(this.mainMenu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthNUD)).EndInit();

@@ -72,7 +72,7 @@ namespace Avokado
                             {
                                 query = new SqlCommand($"update buyers set password = @password where id_buyer like '{authForm.userId}'", DBHElper.sqlConnection);
                                 query.Parameters.AddWithValue("password", passwordTB.Text);
-                                var res = MessageBox.Show("Уверены, что хотите изменить gfhjkm?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                var res = MessageBox.Show("Уверены, что хотите изменить пароль?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                 if (res == DialogResult.Yes)
                                 {
                                     if (query.ExecuteNonQuery().ToString().Equals("1"))
